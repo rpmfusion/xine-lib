@@ -10,7 +10,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.4
-Release:        2%{?dist}
+Release:        3%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -329,6 +329,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Tue Nov 05 2013 Xavier Bachelot <xavier@bachelot.org> 1.2.4-3
+- Rebuild for ffmpeg 2.1.
+
 * Sat Oct 12 2013 Xavier Bachelot <xavier@bachelot.org> 1.2.4-2
 - Make the build more verbose.
 - Don't run autogen.sh gratuitously and drop BR: autoconf automake libtool.
