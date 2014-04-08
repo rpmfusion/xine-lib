@@ -1,4 +1,4 @@
-%global         plugin_abi  2.3
+%global         plugin_abi  2.4
 %global         codecdir    %{_libdir}/codecs
 
 %ifarch %{ix86}
@@ -9,15 +9,14 @@
 
 Summary:        A multimedia engine
 Name:           xine-lib
-Version:        1.2.4
-Release:        3%{?dist}
+Version:        1.2.5
+Release:        1%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
 
 # http://bugzilla.redhat.com/477226
 Patch1:         xine-lib-1.1.16.2-multilib.patch
-Patch2:         xine-lib-1.2.4-fix_libmpeg2_fsf_address.patch
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -47,6 +46,7 @@ BuildRequires:  libmng-devel
 BuildRequires:  aalib-devel >= 1.4
 BuildRequires:  libcaca-devel >= 0.99-0.5.beta14
 BuildRequires:  ImageMagick-devel >= 6.2.4.6-1
+BuildRequires:  libvpx-devel
 %if 0%{?_with_freetype:1}
 BuildRequires:  fontconfig-devel
 %endif # freetype
@@ -107,8 +107,6 @@ This package contains extra plugins for %{name}:
 %prep
 %setup -q
 %patch1 -p1 -b .multilib
-# Fix FSF address in some libmpeg2 files
-%patch2 -p1 -b .libmpeg2_fsf_address
 
 
 %build
@@ -216,6 +214,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_ff.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_gsm610.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libjpeg.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libvpx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_lpcm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mad.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mpeg2.so
@@ -329,6 +328,17 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Tue Apr 08 2014 Xavier Bachelot <xavier@bachelot.org> 1.2.5-1
+- Update to 1.2.5.
+- Drop upstream'ed patch.
+- Enable VP8/9 decoder through libvpx.
+
+* Tue Mar 25 2014 Xavier Bachelot <xavier@bachelot.org> 1.2.4-5
+- Rebuild for ffmpeg 2.2.
+
+* Wed Feb 26 2014 Nicolas Chauvet <kwizart@gmail.com> - 1.2.4-4
+- Rebuilt for libcdio
+
 * Tue Nov 05 2013 Xavier Bachelot <xavier@bachelot.org> 1.2.4-3
 - Rebuild for ffmpeg 2.1.
 
