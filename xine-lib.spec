@@ -1,4 +1,4 @@
-%global         plugin_abi  2.4
+%global         plugin_abi  2.5
 %global         codecdir    %{_libdir}/codecs
 
 %ifarch %{ix86}
@@ -9,7 +9,7 @@
 
 Summary:        A multimedia engine
 Name:           xine-lib
-Version:        1.2.5
+Version:        1.2.6
 Release:        1%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
@@ -328,6 +328,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Sun Jul 06 2014 Xavier Bachelot <xavier@bachelot.org> 1.2.6-1
+- Update to 1.2.6.
+
 * Tue Apr 08 2014 Xavier Bachelot <xavier@bachelot.org> 1.2.5-1
 - Update to 1.2.5.
 - Drop upstream'ed patch.
