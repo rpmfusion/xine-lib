@@ -10,7 +10,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.6
-Release:        4%{?dist}
+Release:        6%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -328,6 +328,12 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Wed Oct 01 2014 Sérgio Basto <sergio@serjux.com> - 1.2.6-6
+- Rebuilt again for FFmpeg 2.3.x (with FFmpeg 2.3.x in build root)
+
+* Wed Oct 01 2014 Sérgio Basto <sergio@serjux.com> - 1.2.6-5
+- Rebuilt for FFmpeg 2.3.x (with FFmpeg 2.3.x in build root)
+
 * Sat Sep 27 2014 kwizart <kwizart@gmail.com> - 1.2.6-4
 - Rebuilt for FFmpeg 2.3x
 
