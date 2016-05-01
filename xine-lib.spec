@@ -10,13 +10,14 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.6
-Release:        8%{?dist}
+Release:        9%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
 
 # http://bugzilla.redhat.com/477226
 Patch1:         xine-lib-1.1.16.2-multilib.patch
+Patch2:         ffmpeg_2.9.patch
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -107,6 +108,7 @@ This package contains extra plugins for %{name}:
 %prep
 %setup -q
 %patch1 -p1 -b .multilib
+%patch2 -p1 -b .ffmpeg_2.9
 
 
 %build
@@ -328,6 +330,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Sun May 01 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-9
+- Add patch to build with ffmpeg3
+
 * Tue Nov 04 2014 Nicolas Chauvet <kwizart@gmail.com> - 1.2.6-8
 - Rebuilt for vaapi 0.36
 
