@@ -10,7 +10,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.6
-Release:        10%{?dist}
+Release:        11%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -67,6 +67,7 @@ BuildRequires:  speex-devel
 BuildRequires:  wavpack-devel
 # CDs / DVDs
 BuildRequires:  libcdio-devel
+BuildRequires:  vcdimager-devel >= 0.7.23
 BuildRequires:  libdvdnav-devel
 BuildRequires:  libdvdread-devel
 BuildRequires:  libbluray-devel
@@ -132,7 +133,6 @@ export SDL_CFLAGS="$(sdl-config --cflags)" SDL_LIBS="$(sdl-config --libs)"
     --with-xv-path=%{_libdir} \
     --with-libflac \
     --without-esound \
-    --disable-vcd \
     --with-wavpack \
     --with-real-codecs-path=%{codecdir} \
     --with-w32-path=%{codecdir}
@@ -281,8 +281,8 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtsp.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_stdin_fifo.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l2.so
-#{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
-#{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_nsf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_sputext.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
@@ -330,6 +330,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Fri Jul 08 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-11
+- Build again with vcd support
+
 * Fri Jul 01 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-10
 - Remove BR: vcdimager-devel and disable vcd; package retired in F24
 
