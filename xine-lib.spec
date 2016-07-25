@@ -10,7 +10,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.6
-Release:        11%{?dist}
+Release:        12%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -18,6 +18,7 @@ Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
 # http://bugzilla.redhat.com/477226
 Patch1:         xine-lib-1.1.16.2-multilib.patch
 Patch2:         ffmpeg_2.9.patch
+Patch3:         xine-lib-link-xcb.patch
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -76,6 +77,7 @@ BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  gtk2-devel
 BuildRequires:  libsmbclient-devel
+BuildRequires:  libtool
 
 
 %description
@@ -109,6 +111,8 @@ This package contains extra plugins for %{name}:
 %setup -q
 %patch1 -p1 -b .multilib
 %patch2 -p1 -b .ffmpeg_2.9
+%patch3 -p1 -b .xcb
+autoreconf -i
 
 
 %build
@@ -330,6 +334,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Mon Jul 25 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-12
+- Fix build with libxcb-1.12, https://bugs.xine-project.org/show_bug.cgi?id=573
+
 * Fri Jul 08 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-11
 - Build again with vcd support
 
