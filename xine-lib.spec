@@ -1,4 +1,4 @@
-%global         plugin_abi  2.5
+%global         plugin_abi  2.6
 %global         codecdir    %{_libdir}/codecs
 
 %ifarch %{ix86}
@@ -9,14 +9,11 @@
 
 Summary:        A multimedia engine
 Name:           xine-lib
-Version:        1.2.6
+Version:        1.2.8
 Release:        1%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
-Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
-
-# http://bugzilla.redhat.com/477226
-Patch1:         xine-lib-1.1.16.2-multilib.patch
+Source0:        https://%{name}.alioth.debian.org/releases/%{name}-%{version}.tar.xz
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -24,8 +21,6 @@ Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 Obsoletes:      xine-lib-extras-freeworld < 1.1.21-10
 Provides:       xine-lib-extras-freeworld = %{version}-%{release}
 
-BuildRequires:  gawk
-BuildRequires:  sed
 BuildRequires:  gettext-devel
 # X11
 BuildRequires:  libX11-devel
@@ -69,12 +64,14 @@ BuildRequires:  libcdio-devel
 BuildRequires:  vcdimager-devel >= 0.7.23
 BuildRequires:  libdvdnav-devel
 BuildRequires:  libdvdread-devel
-BuildRequires:  libbluray-devel
+# libbluray is too old on EL6
+%{!?el6:BuildRequires:  libbluray-devel}
 # Other
 BuildRequires:  pkgconfig
 BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  gtk2-devel
 BuildRequires:  libsmbclient-devel
+BuildRequires:  libtool
 
 
 %description
@@ -106,7 +103,7 @@ This package contains extra plugins for %{name}:
 
 %prep
 %setup -q
-%patch1 -p1 -b .multilib
+autoreconf -i
 
 
 %build
@@ -150,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT%{_docdir}/xine-lib
 
 # Removing useless files
 rm -Rf $RPM_BUILD_ROOT%{_libdir}/libxine*.la __docs/README \
-       __docs/README.{freebsd,irix,solaris,MINGWCROSS,WIN32}
+       __docs/README.{freebsd,irix,macosx,solaris,MINGWCROSS,WIN32}
 
 # Directory for binary codecs
 mkdir -p $RPM_BUILD_ROOT%{codecdir}
@@ -162,9 +159,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %files -f libxine2.lang
-%doc AUTHORS COPYING COPYING.LIB CREDITS ChangeLog* README TODO
+%doc AUTHORS CREDITS ChangeLog* README TODO
 %doc __docs/README.* __docs/faq.*
-%doc doc/README.dxr3 doc/README.network_dvd
+%license COPYING COPYING.LIB
 %dir %{codecdir}/
 %{_datadir}/xine-lib/
 %{_libdir}/libxine.so.*
@@ -200,12 +197,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/vidix/unichrome_vid.so
 %endif # vidix
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_alsa.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_file.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_none.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_oss.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_pulseaudio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_a52.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_bitplane.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dts.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dvaudio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dxr3_spu.so
@@ -222,54 +216,34 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %ifarch %{ix86}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_qt.so
 %endif # ix86
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_rawvideo.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_real.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_rgb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spu.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spucc.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spucmml.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spudvb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spuhdmv.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau_h264.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau_h264_alter.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau_mpeg12.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau_mpeg4.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau_vc1.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau.so
 %ifarch %{ix86}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_w32dll.so
 %endif # ix86
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_yuv.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_audio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_asf.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_avi.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_fli.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_flv.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_games.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_iff.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_image.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_matroska.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_mng.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_modplug.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_mpeg.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_mpeg_block.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_mpeg_elem.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_mpeg_pes.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_mpeg_ts.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_nsv.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_playlist.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_pva.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_qt.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_rawdv.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_real.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_slave.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_vc1_es.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_yuv_frames.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_yuv4mpeg2.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_video.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_flac.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so
+%{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvd.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_file.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_http.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_mms.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_net.so
@@ -277,7 +251,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pvr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtsp.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_stdin_fifo.so
+%{?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so
@@ -286,7 +260,6 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_dxr3.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_none.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_raw.so
@@ -309,7 +282,6 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_gdk_pixbuf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_image.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_smb.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_test.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_aa.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_caca.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_sdl.so
@@ -328,6 +300,52 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Tue Feb 21 2017 Xavier Bachelot <xavier@bachelot.org> 1.2.8-1
+- Update to 1.2.8.
+- All patches are now upstream, remove them.
+- Use %%license.
+- Fix building on EL6.
+- Drop now obsolete BR: gawk and sed.
+
+* Fri Nov 18 2016 Adrian Reber <adrian@lisas.de> - 1.2.6-14
+- Rebuilt for libcdio-0.94
+
+* Sat Jul 30 2016 Julian Sikorski <belegdol@fedoraproject.org> - 1.2.6-13
+- Rebuilt for ffmpeg-3.1.1
+
+* Mon Jul 25 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-12
+- Fix build with libxcb-1.12, https://bugs.xine-project.org/show_bug.cgi?id=573
+
+* Fri Jul 08 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-11
+- Build again with vcd support
+
+* Fri Jul 01 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-10
+- Remove BR: vcdimager-devel and disable vcd; package retired in F24
+
+* Sun May 01 2016 Sérgio Basto <sergio@serjux.com> - 1.2.6-9
+- Add patch to build with ffmpeg3
+
+* Tue Nov 04 2014 Nicolas Chauvet <kwizart@gmail.com> - 1.2.6-8
+- Rebuilt for vaapi 0.36
+
+* Mon Oct 20 2014 Sérgio Basto <sergio@serjux.com> - 1.2.6-7
+- Rebuilt for FFmpeg 2.4.3
+
+* Wed Oct 01 2014 Sérgio Basto <sergio@serjux.com> - 1.2.6-6
+- Rebuilt again for FFmpeg 2.3.x (with FFmpeg 2.3.x in build root)
+
+* Wed Oct 01 2014 Sérgio Basto <sergio@serjux.com> - 1.2.6-5
+- Rebuilt for FFmpeg 2.3.x (with FFmpeg 2.3.x in build root)
+
+* Sat Sep 27 2014 kwizart <kwizart@gmail.com> - 1.2.6-4
+- Rebuilt for FFmpeg 2.3x
+
+* Thu Sep 25 2014 Xavier Bachelot <xavier@bachelot.org> 1.2.6-3
+- Rebuild for ffmpeg 2.4.
+
+* Thu Aug 07 2014 Sérgio Basto <sergio@serjux.com> - 1.2.6-2
+- Rebuilt for ffmpeg-2.3
+
 * Sun Jul 06 2014 Xavier Bachelot <xavier@bachelot.org> 1.2.6-1
 - Update to 1.2.6.
 
