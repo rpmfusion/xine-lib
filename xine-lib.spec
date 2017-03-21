@@ -10,7 +10,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        https://%{name}.alioth.debian.org/releases/%{name}-%{version}.tar.xz
@@ -300,6 +300,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Tue Mar 21 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.2.8-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Tue Feb 21 2017 Xavier Bachelot <xavier@bachelot.org> 1.2.8-1
 - Update to 1.2.8.
 - All patches are now upstream, remove them.
