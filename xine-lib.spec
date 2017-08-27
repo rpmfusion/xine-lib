@@ -10,7 +10,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.8
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        https://%{name}.alioth.debian.org/releases/%{name}-%{version}.tar.xz
@@ -300,6 +300,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Sun Aug 27 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.2.8-4
+- Rebuilt for ImageMagick
+
 * Sat Apr 29 2017 Leigh Scott <leigh123linux@googlemail.com> - 1.2.8-3
 - Rebuild for ffmpeg update
 
