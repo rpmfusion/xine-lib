@@ -1,4 +1,4 @@
-%global         plugin_abi  2.6
+%global         plugin_abi  2.7
 %global         codecdir    %{_libdir}/codecs
 
 %ifarch %{ix86}
@@ -9,11 +9,11 @@
 
 Summary:        A multimedia engine
 Name:           xine-lib
-Version:        1.2.8
+Version:        1.2.9
 Release:        1%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
-Source0:        https://%{name}.alioth.debian.org/releases/%{name}-%{version}.tar.xz
+Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -211,8 +211,8 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libvpx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_lpcm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mad.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mpeg2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mpc.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mpeg2.so
 %ifarch %{ix86}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_qt.so
 %endif # ix86
@@ -227,8 +227,8 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %ifarch %{ix86}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_w32dll.so
 %endif # ix86
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_audio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_asf.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_audio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_fli.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_games.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_image.so
@@ -244,13 +244,10 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvd.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_http.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_mms.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_net.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pnm.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_network.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pvr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtsp.so
 %{?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
@@ -300,6 +297,18 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Fri Jan 12 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-1
+- Update to 1.2.9.
+
+* Sun Aug 27 2017 Nicolas Chauvet <kwizart@gmail.com> - 1.2.8-4
+- Rebuilt for ImageMagick
+
+* Sat Apr 29 2017 Leigh Scott <leigh123linux@googlemail.com> - 1.2.8-3
+- Rebuild for ffmpeg update
+
+* Tue Mar 21 2017 RPM Fusion Release Engineering <kwizart@rpmfusion.org> - 1.2.8-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
+
 * Tue Feb 21 2017 Xavier Bachelot <xavier@bachelot.org> 1.2.8-1
 - Update to 1.2.8.
 - All patches are now upstream, remove them.
