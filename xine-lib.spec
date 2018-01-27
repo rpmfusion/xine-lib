@@ -1,3 +1,5 @@
+%undefine _strict_symbol_defs_build
+
 %global         plugin_abi  2.7
 %global         codecdir    %{_libdir}/codecs
 
