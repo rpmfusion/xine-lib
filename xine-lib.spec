@@ -10,7 +10,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        3%{?dist}
+Release:        4%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -297,6 +297,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Sat Jan 27 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.2.9-4
+- Rebuild for new libcdio, libvpx and vcdimager
+
 * Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.2.9-3
 - Rebuilt for ffmpeg-3.5 git
 
