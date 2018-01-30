@@ -10,7 +10,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        1%{?dist}
+Release:        2%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -297,6 +297,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Tue Jan 30 2018 Nicolas Chauvet <kwizart@gmail.com> - 1.2.9-2
+- rebuilt
+
 * Fri Jan 12 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-1
 - Update to 1.2.9.
 
