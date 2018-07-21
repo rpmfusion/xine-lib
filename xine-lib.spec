@@ -12,7 +12,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        6%{?dist}
+Release:        7%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -23,6 +23,7 @@ Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 Obsoletes:      xine-lib-extras-freeworld < 1.1.21-10
 Provides:       xine-lib-extras-freeworld = %{version}-%{release}
 
+BuildRequires:  gcc
 BuildRequires:  gettext-devel
 # X11
 BuildRequires:  libX11-devel
@@ -299,6 +300,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Fri Jul 20 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-7
+- Add BR: gcc.
+
 * Thu Mar 08 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 1.2.9-6
 - Rebuilt for new ffmpeg snapshot
 
