@@ -12,7 +12,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        9%{?dist}
+Release:        10%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -300,6 +300,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Wed Aug 29 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-10
+- Rebuilt for ImageMagick soname bump.
+
 * Sun Aug 19 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.2.9-9
 - Rebuilt for Fedora 29 Mass Rebuild binutils issue
 
