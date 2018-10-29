@@ -59,6 +59,10 @@ BuildRequires:  aalib-devel >= 1.4
 BuildRequires:  libcaca-devel >= 0.99-0.5.beta14
 BuildRequires:  ImageMagick-devel >= 6.2.4.6-1
 BuildRequires:  libvpx-devel
+# Not available on EL6 and EL7
+%if 0%{?fedora}
+BuildRequires:  libaom-devel
+%endif
 %if 0%{?_with_freetype:1}
 BuildRequires:  fontconfig-devel
 %endif # freetype
@@ -228,6 +232,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_faad.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_ff.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_gsm610.so
+%if 0%{?fedora}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libaom.so
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libjpeg.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libvpx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_lpcm.so
@@ -326,6 +333,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Update to xine-lib snapshot.
 - Enable SSH and NFS input plugins.
 - Enable TLS support.
+- Enable AV1 support through libaom (Fedora only).
 
 * Thu Dec 06 2018 Antonio Trande <sagitter@fedoraproject.org> - 1.2.9-11
 - Rebuild for ffmpeg-3.* on el7
