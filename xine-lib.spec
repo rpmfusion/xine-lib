@@ -91,6 +91,8 @@ BuildRequires:  libsmbclient-devel
 BuildRequires:  libtool
 BuildRequires:  libssh2-devel
 BuildRequires:  libnfs-devel
+BuildRequires:  gnutls-devel
+BuildRequires:  openssl-devel
 
 
 %description
@@ -276,6 +278,8 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_nsf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_sputext.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_gnutls.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
@@ -321,6 +325,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 * Mon Dec 10 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-12.20181022hg14243
 - Update to xine-lib snapshot.
 - Enable SSH and NFS input plugins.
+- Enable TLS support.
 
 * Thu Dec 06 2018 Antonio Trande <sagitter@fedoraproject.org> - 1.2.9-11
 - Rebuild for ffmpeg-3.* on el7
