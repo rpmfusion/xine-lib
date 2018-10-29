@@ -89,6 +89,8 @@ BuildRequires:  pkgconfig(libpulse)
 BuildRequires:  gtk2-devel
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libtool
+BuildRequires:  libssh2-devel
+BuildRequires:  libnfs-devel
 
 
 %description
@@ -264,8 +266,10 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvd.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_mms.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_network.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_nfs.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pvr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so
 %{?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
@@ -316,6 +320,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %changelog
 * Mon Dec 10 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-12.20181022hg14243
 - Update to xine-lib snapshot.
+- Enable SSH and NFS input plugins.
 
 * Thu Dec 06 2018 Antonio Trande <sagitter@fedoraproject.org> - 1.2.9-11
 - Rebuild for ffmpeg-3.* on el7
