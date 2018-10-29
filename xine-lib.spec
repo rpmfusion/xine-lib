@@ -9,13 +9,26 @@
     %global     have_vidix  0
 %endif # ix86
 
+%global         snapshot    1
+%global         date        20181022
+%global         revision    14243
+
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        11%{?dist}
+Release:        12%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
+%if ! 0%{?snapshot}
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
+%else
+#hg clone http://hg.code.sf.net/p/xine/xine-lib-1.2 xine-lib-1.2
+#cd xine-lib-1.2
+#autoreconf -vif
+#./configure
+#make dist
+Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
+%endif
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -106,7 +119,11 @@ This package contains extra plugins for %{name}:
 
 
 %prep
+%if ! 0%{?snapshot}
 %setup -q
+%else
+%setup -q -n %{name}-%{version}-%{date}hg%{revision}
+%endif
 autoreconf -ivf
 
 
@@ -204,8 +221,6 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_a52.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dts.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dvaudio.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dxr3_spu.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dxr3_video.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_faad.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_ff.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_gsm610.so
@@ -241,6 +256,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_pva.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_slave.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_video.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dxr3.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_flac.so
 %{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
@@ -257,7 +273,6 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_nsf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_sputext.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_dxr3.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl2.so
@@ -299,6 +314,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Mon Dec 10 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-12.20181022hg14243
+- Update to xine-lib snapshot.
+
 * Thu Dec 06 2018 Antonio Trande <sagitter@fedoraproject.org> - 1.2.9-11
 - Rebuild for ffmpeg-3.* on el7
 
