@@ -10,8 +10,8 @@
 %endif # ix86
 
 %global         snapshot    1
-%global         date        20181022
-%global         revision    14243
+%global         date        20181129
+%global         revision    14263
 
 Summary:        A multimedia engine
 Name:           xine-lib
@@ -329,7 +329,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
-* Mon Dec 10 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-12.20181022hg14243
+* Mon Dec 10 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-12.20181129hg14263
 - Update to xine-lib snapshot.
 - Enable SSH and NFS input plugins.
 - Enable TLS support.
