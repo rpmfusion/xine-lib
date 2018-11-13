@@ -63,6 +63,7 @@ BuildRequires:  libvpx-devel
 %if 0%{?fedora}
 BuildRequires:  libaom-devel
 %endif
+%{?_with_rpi:BuildRequires: raspberrypi-vc-libs-devel}
 %if 0%{?_with_freetype:1}
 BuildRequires:  fontconfig-devel
 %endif # freetype
@@ -236,6 +237,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libaom.so
 %endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libjpeg.so
+%{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libmmal.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libvpx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_lpcm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mad.so
@@ -289,6 +291,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
+%{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_mmal.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_raw.so
@@ -334,6 +337,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Enable SSH and NFS input plugins.
 - Enable TLS support.
 - Enable AV1 support through libaom (Fedora only).
+- Add support for RPI.
 
 * Thu Dec 06 2018 Antonio Trande <sagitter@fedoraproject.org> - 1.2.9-11
 - Rebuild for ffmpeg-3.* on el7
