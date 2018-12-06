@@ -1,3 +1,5 @@
+%undefine _strict_symbol_defs_build
+
 %global         plugin_abi  2.7
 %global         codecdir    %{_libdir}/codecs
 
@@ -10,7 +12,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        2%{?dist}
+Release:        11%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -21,6 +23,8 @@ Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 Obsoletes:      xine-lib-extras-freeworld < 1.1.21-10
 Provides:       xine-lib-extras-freeworld = %{version}-%{release}
 
+BuildRequires:  gcc
+%{?el7:BuildRequires: epel-rpm-macros}
 BuildRequires:  gettext-devel
 # X11
 BuildRequires:  libX11-devel
@@ -83,7 +87,7 @@ common multimedia formats available - and some uncommon formats, too.
 %package        devel
 Summary:        Xine library development files
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       zlib-devel
+Requires:       zlib-devel%{?_isa}
 %description    devel
 This package contains development files for %{name}.
 
@@ -103,7 +107,7 @@ This package contains extra plugins for %{name}:
 
 %prep
 %setup -q
-autoreconf -i
+autoreconf -ivf
 
 
 %build
@@ -136,11 +140,11 @@ export SDL_CFLAGS="$(sdl-config --cflags)" SDL_LIBS="$(sdl-config --libs)"
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 %find_lang libxine2
 cp -pR $RPM_BUILD_ROOT%{_docdir}/xine-lib __docs
 rm -rf $RPM_BUILD_ROOT%{_docdir}/xine-lib
@@ -153,9 +157,7 @@ rm -Rf $RPM_BUILD_ROOT%{_libdir}/libxine*.la __docs/README \
 mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 
 %files -f libxine2.lang
@@ -297,8 +299,35 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
-* Tue Jan 30 2018 Nicolas Chauvet <kwizart@gmail.com> - 1.2.9-2
-- rebuilt
+* Thu Dec 06 2018 Antonio Trande <sagitter@fedoraproject.org> - 1.2.9-11
+- Rebuild for ffmpeg-3.* on el7
+
+* Wed Aug 29 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-10.1
+- Rebuilt for ImageMagick soname bump.
+
+* Sun Aug 19 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.2.9-9
+- Rebuilt for Fedora 29 Mass Rebuild binutils issue
+
+* Fri Jul 27 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
+* Fri Jul 20 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-7
+- Add BR: gcc.
+
+* Thu Mar 08 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 1.2.9-6
+- Rebuilt for new ffmpeg snapshot
+
+* Thu Mar 01 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 1.2.9-5
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
+
+* Sat Jan 27 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.2.9-4
+- Rebuild for new libcdio, libvpx and vcdimager
+
+* Thu Jan 18 2018 Leigh Scott <leigh123linux@googlemail.com> - 1.2.9-3
+- Rebuilt for ffmpeg-3.5 git
+
+* Mon Jan 15 2018 Nicolas Chauvet <kwizart@gmail.com> - 1.2.9-2
+- Rebuilt for VA-API 1.0.0
 
 * Fri Jan 12 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-1
 - Update to 1.2.9.
