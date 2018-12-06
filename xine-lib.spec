@@ -12,7 +12,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        10%{?dist}.1
+Release:        11%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -24,6 +24,7 @@ Obsoletes:      xine-lib-extras-freeworld < 1.1.21-10
 Provides:       xine-lib-extras-freeworld = %{version}-%{release}
 
 BuildRequires:  gcc
+%{?el7:BuildRequires: epel-rpm-macros}
 BuildRequires:  gettext-devel
 # X11
 BuildRequires:  libX11-devel
@@ -86,7 +87,7 @@ common multimedia formats available - and some uncommon formats, too.
 %package        devel
 Summary:        Xine library development files
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       zlib-devel
+Requires:       zlib-devel%{?_isa}
 %description    devel
 This package contains development files for %{name}.
 
@@ -106,7 +107,7 @@ This package contains extra plugins for %{name}:
 
 %prep
 %setup -q
-autoreconf -i
+autoreconf -ivf
 
 
 %build
@@ -139,11 +140,11 @@ export SDL_CFLAGS="$(sdl-config --cflags)" SDL_LIBS="$(sdl-config --libs)"
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 %find_lang libxine2
 cp -pR $RPM_BUILD_ROOT%{_docdir}/xine-lib __docs
 rm -rf $RPM_BUILD_ROOT%{_docdir}/xine-lib
@@ -156,9 +157,7 @@ rm -Rf $RPM_BUILD_ROOT%{_libdir}/libxine*.la __docs/README \
 mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 
 %files -f libxine2.lang
@@ -300,6 +299,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Thu Dec 06 2018 Antonio Trande <sagitter@fedoraproject.org> - 1.2.9-11
+- Rebuild for ffmpeg-3.* on el7
+
 * Wed Aug 29 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-10.1
 - Rebuilt for ImageMagick soname bump.
 
