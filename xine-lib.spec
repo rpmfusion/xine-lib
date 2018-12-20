@@ -63,7 +63,7 @@ BuildRequires:  libvpx-devel
 %if 0%{?fedora}
 BuildRequires:  libaom-devel
 %endif
-%{?_with_rpi:BuildRequires: raspberrypi-vc-libs-devel}
+%{?_with_rpi:BuildRequires: raspberrypi-vc-devel}
 %if 0%{?_with_freetype:1}
 BuildRequires:  fontconfig-devel
 %endif # freetype
