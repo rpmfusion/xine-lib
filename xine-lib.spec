@@ -16,7 +16,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        12%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        13%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -332,6 +332,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
+
 * Mon Dec 10 2018 Xavier Bachelot <xavier@bachelot.org> 1.2.9-12.20181129hg14263
 - Update to xine-lib snapshot.
 - Enable SSH and NFS input plugins.
