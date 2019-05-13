@@ -48,6 +48,7 @@ BuildRequires:  libv4l-devel
 BuildRequires:  libxcb-devel
 BuildRequires:  libva-devel
 BuildRequires:  libvdpau-devel
+BuildRequires:  mesa-libEGL-devel
 # Video
 BuildRequires:  SDL-devel
 BuildRequires:  libtheora-devel
@@ -290,6 +291,8 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
 %{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_mmal.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_glx.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_x11.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_wl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_raw.so
@@ -333,6 +336,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 * Fri May 17 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-14.20190516hg14396
 - Update to xine-lib snapshot.
 - Add script to make a snapshot.
+- Enable EGL support.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
