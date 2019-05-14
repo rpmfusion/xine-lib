@@ -27,6 +27,10 @@ Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 # Script to make a snapshot
 Source1:        make_xinelib_snapshot.sh
 
+# Based on:
+# https://sourceforge.net/p/xine/xine-lib-1.2/ci/ba01d04fe4d50a67302ed3cdbf69fe62995313bd/
+Patch1:         xine-lib-1.2.9-revert_update_gettext.patch
+
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
 
@@ -121,6 +125,7 @@ This package contains extra plugins for %{name}:
 %else
 %setup -q -n %{name}-%{version}-%{date}hg%{revision}
 %endif
+%{?el6:%patch1 -p1}
 autoreconf -ivf
 
 
@@ -328,6 +333,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Clean up and sort BuildRequires.
 - Enable fontconfig support.
 - No NFS support on EL6.
+- Add patch to revert gettext version bump on EL6.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
