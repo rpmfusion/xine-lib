@@ -61,7 +61,7 @@ BuildRequires:  libmad-devel
 BuildRequires:  libmng-devel
 BuildRequires:  libmodplug-devel
 BuildRequires:  libmpcdec-devel
-BuildRequires:  libnfs-devel
+%{!?el6:BuildRequires:  libnfs-devel}
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libssh2-devel
 BuildRequires:  libtheora-devel
@@ -261,7 +261,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvd.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_mms.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_network.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_nfs.so
+%{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_nfs.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pvr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so
@@ -327,6 +327,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Don't glob soname.
 - Clean up and sort BuildRequires.
 - Enable fontconfig support.
+- No NFS support on EL6.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
