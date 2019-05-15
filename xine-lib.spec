@@ -191,7 +191,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %license COPYING COPYING.LIB
 %dir %{codecdir}/
 %{_datadir}/xine-lib/
-%{_libdir}/libxine.so.*
+%{_libdir}/libxine.so.2*
 %{_mandir}/man5/xine.5*
 %dir %{_libdir}/xine/
 %dir %{_libdir}/xine/plugins/
@@ -339,6 +339,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Add script to make a snapshot.
 - Enable EGL support.
 - Enable mpeg2 encoding support for dxr3.
+- Don't glob soname.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
