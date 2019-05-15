@@ -96,6 +96,7 @@ BuildRequires:  libssh2-devel
 BuildRequires:  libnfs-devel
 BuildRequires:  gnutls-devel
 BuildRequires:  openssl-devel
+BuildRequires:  libfame-devel
 
 
 %description
@@ -337,6 +338,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Update to xine-lib snapshot.
 - Add script to make a snapshot.
 - Enable EGL support.
+- Enable mpeg2 encoding support for dxr3.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
