@@ -22,13 +22,10 @@ URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
 Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
 %else
-#hg clone http://hg.code.sf.net/p/xine/xine-lib-1.2 xine-lib-1.2
-#cd xine-lib-1.2
-#autoreconf -vif
-#./configure
-#make dist
 Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 %endif
+# Script to make a snapshot
+Source1:        make_xinelib_snapshot.sh
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -335,6 +332,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %changelog
 * Fri May 17 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-14.20190516hg14396
 - Update to xine-lib snapshot.
+- Add script to make a snapshot.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
