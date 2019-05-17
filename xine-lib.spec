@@ -33,70 +33,59 @@ Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 Obsoletes:      xine-lib-extras-freeworld < 1.1.21-10
 Provides:       xine-lib-extras-freeworld = %{version}-%{release}
 
-BuildRequires:  gcc
-%{?el7:BuildRequires: epel-rpm-macros}
-BuildRequires:  gettext-devel
-# X11
-BuildRequires:  libX11-devel
-BuildRequires:  libXv-devel
-BuildRequires:  libXt-devel
-BuildRequires:  libXext-devel
-BuildRequires:  libXinerama-devel
-BuildRequires:  libXvMC-devel
-BuildRequires:  libGLU-devel
-BuildRequires:  libv4l-devel
-BuildRequires:  libxcb-devel
-BuildRequires:  libva-devel
-BuildRequires:  libvdpau-devel
-BuildRequires:  mesa-libEGL-devel
-# Video
-BuildRequires:  SDL-devel
-BuildRequires:  libtheora-devel
-BuildRequires:  libmng-devel
-BuildRequires:  aalib-devel >= 1.4
-BuildRequires:  libcaca-devel >= 0.99-0.5.beta14
-BuildRequires:  ImageMagick-devel >= 6.2.4.6-1
-BuildRequires:  libvpx-devel
-# Not available on EL6 and EL7
-%if 0%{?fedora}
-BuildRequires:  libaom-devel
-%endif
-%{?_with_rpi:BuildRequires: raspberrypi-vc-devel}
-%if 0%{?_with_freetype:1}
-BuildRequires:  fontconfig-devel
-%endif # freetype
-# Audio
-BuildRequires:  ffmpeg-devel >= 0.4.9-0.22.20060804
 BuildRequires:  a52dec-devel
-BuildRequires:  alsa-lib-devel >= 0.9.0
+BuildRequires:  aalib-devel
+BuildRequires:  alsa-lib-devel
 BuildRequires:  faad2-devel
+BuildRequires:  ffmpeg-devel
 BuildRequires:  flac-devel
+%{?_with_freetype:BuildRequires:  fontconfig-devel}
+BuildRequires:  gcc
+BuildRequires:  gettext-devel
+BuildRequires:  gnutls-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  ImageMagick-devel
 BuildRequires:  jack-audio-connection-kit-devel
-BuildRequires:  libdca-devel
-BuildRequires:  libmad-devel
-BuildRequires:  libmodplug-devel
-BuildRequires:  libmpcdec-devel
-BuildRequires:  libvorbis-devel
-BuildRequires:  speex-devel
-BuildRequires:  wavpack-devel
-# CDs / DVDs
-BuildRequires:  libcdio-devel
-BuildRequires:  vcdimager-devel >= 0.7.23
-BuildRequires:  libdvdnav-devel
-BuildRequires:  libdvdread-devel
+# Not available on EL6 and EL7
+%{?fedora:BuildRequires:  libaom-devel}
 # libbluray is too old on EL6
 %{!?el6:BuildRequires:  libbluray-devel}
-# Other
-BuildRequires:  pkgconfig
-BuildRequires:  pkgconfig(libpulse)
-BuildRequires:  gtk2-devel
-BuildRequires:  libsmbclient-devel
-BuildRequires:  libtool
-BuildRequires:  libssh2-devel
-BuildRequires:  libnfs-devel
-BuildRequires:  gnutls-devel
-BuildRequires:  openssl-devel
+BuildRequires:  libcaca-devel
+BuildRequires:  libcdio-devel
+BuildRequires:  libdca-devel
+BuildRequires:  libdvdnav-devel
+BuildRequires:  libdvdread-devel
 BuildRequires:  libfame-devel
+BuildRequires:  libGLU-devel
+BuildRequires:  libmad-devel
+BuildRequires:  libmng-devel
+BuildRequires:  libmodplug-devel
+BuildRequires:  libmpcdec-devel
+BuildRequires:  libnfs-devel
+BuildRequires:  libsmbclient-devel
+BuildRequires:  libssh2-devel
+BuildRequires:  libtheora-devel
+BuildRequires:  libtool
+BuildRequires:  libv4l-devel
+BuildRequires:  libva-devel
+BuildRequires:  libvdpau-devel
+BuildRequires:  libvorbis-devel
+BuildRequires:  libvpx-devel
+BuildRequires:  libX11-devel
+BuildRequires:  libxcb-devel
+BuildRequires:  libXext-devel
+BuildRequires:  libXinerama-devel
+BuildRequires:  libXt-devel
+BuildRequires:  libXv-devel
+BuildRequires:  libXvMC-devel
+BuildRequires:  mesa-libEGL-devel
+BuildRequires:  openssl-devel
+BuildRequires:  pkgconfig(libpulse)
+%{?_with_rpi:BuildRequires: raspberrypi-vc-devel}
+BuildRequires:  SDL-devel
+BuildRequires:  speex-devel
+BuildRequires:  vcdimager-devel
+BuildRequires:  wavpack-devel
 
 
 %description
@@ -340,6 +329,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Enable EGL support.
 - Enable mpeg2 encoding support for dxr3.
 - Don't glob soname.
+- Clean up and sort BuildRequires.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
