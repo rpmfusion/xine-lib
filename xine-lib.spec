@@ -83,7 +83,7 @@ BuildRequires:  libXt-devel
 BuildRequires:  libXv-devel
 BuildRequires:  libXvMC-devel
 BuildRequires:  mesa-libEGL-devel
-BuildRequires:  openssl-devel
+%{!?el6:BuildRequires:  openssl-devel >= 1.0.2}
 BuildRequires:  pkgconfig(libpulse)
 %{?_with_rpi:BuildRequires: raspberrypi-vc-devel}
 BuildRequires:  SDL-devel
@@ -277,13 +277,13 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_nsf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_sputext.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_gnutls.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so
+%{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
 %{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_mmal.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_glx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_x11.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_wl.so
+%{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_wl.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_raw.so
@@ -334,6 +334,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Enable fontconfig support.
 - No NFS support on EL6.
 - Add patch to revert gettext version bump on EL6.
+- No wayland nor openssl support on EL6.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
