@@ -39,7 +39,7 @@ BuildRequires:  alsa-lib-devel
 BuildRequires:  faad2-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  flac-devel
-%{?_with_freetype:BuildRequires:  fontconfig-devel}
+BuildRequires:  fontconfig-devel
 BuildRequires:  gcc
 BuildRequires:  gettext-devel
 BuildRequires:  gnutls-devel
@@ -134,13 +134,9 @@ export SDL_CFLAGS="$(sdl-config --cflags)" SDL_LIBS="$(sdl-config --libs)"
     --enable-libv4l \
     --enable-xvmc \
     --disable-gnomevfs \
-%if 0%{?_with_freetype:1}
-%if 0%{?_with_antialiasing:1}
     --enable-antialiasing \
-%endif # antialiasing
     --with-freetype \
     --with-fontconfig \
-%endif # freetype
     --with-caca \
     --with-external-dvdnav \
     --with-xv-path=%{_libdir} \
@@ -330,6 +326,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 - Enable mpeg2 encoding support for dxr3.
 - Don't glob soname.
 - Clean up and sort BuildRequires.
+- Enable fontconfig support.
 
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.9-13.20181129hg14263
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
