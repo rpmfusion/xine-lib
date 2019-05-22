@@ -128,7 +128,6 @@ autoreconf -ivf
 
 
 %build
-export SDL_CFLAGS="$(sdl-config --cflags)" SDL_LIBS="$(sdl-config --libs)"
 # Keep list of options in mostly the same order as ./configure --help.
 %configure \
     --disable-dependency-tracking \
@@ -325,6 +324,7 @@ mkdir -p %{buildroot}%{codecdir}
 - Update xine-lib snapshot.
 - Remove now unneeded 32 bits build fix.
 - Cosmetic spec cleanup.
+- Remove unneeded SDL build flags setting.
 
 * Fri May 17 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-14.20190516hg14396
 - Update to xine-lib snapshot.
