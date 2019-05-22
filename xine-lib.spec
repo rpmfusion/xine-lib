@@ -159,15 +159,14 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %install
 %make_install
 %find_lang libxine2
-cp -pR $RPM_BUILD_ROOT%{_docdir}/xine-lib __docs
-rm -rf $RPM_BUILD_ROOT%{_docdir}/xine-lib
+mv %{buildroot}%{_docdir}/xine-lib __docs
 
 # Removing useless files
-rm -Rf $RPM_BUILD_ROOT%{_libdir}/libxine*.la __docs/README \
+rm -Rf %{buildroot}%{_libdir}/libxine*.la __docs/README \
        __docs/README.{freebsd,irix,macosx,solaris,MINGWCROSS,WIN32}
 
 # Directory for binary codecs
-mkdir -p $RPM_BUILD_ROOT%{codecdir}
+mkdir -p %{buildroot}%{codecdir}
 
 
 %ldconfig_scriptlets
@@ -325,6 +324,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 * Mon May 27 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-15.20190525hg14404
 - Update xine-lib snapshot.
 - Remove now unneeded 32 bits build fix.
+- Cosmetic spec cleanup.
 
 * Fri May 17 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-14.20190516hg14396
 - Update to xine-lib snapshot.
