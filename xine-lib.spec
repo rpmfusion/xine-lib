@@ -1,5 +1,3 @@
-%undefine _strict_symbol_defs_build
-
 %global         plugin_abi  2.7
 %global         codecdir    %{_libdir}/codecs
 
@@ -16,7 +14,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        14%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        15%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -326,6 +324,7 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 %changelog
 * Mon May 27 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-15.20190525hg14404
 - Update xine-lib snapshot.
+- Remove now unneeded 32 bits build fix.
 
 * Fri May 17 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-14.20190516hg14396
 - Update to xine-lib snapshot.
