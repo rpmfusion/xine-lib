@@ -10,8 +10,8 @@
 %endif # ix86
 
 %global         snapshot    1
-%global         date        20190516
-%global         revision    14396
+%global         date        20190525
+%global         revision    14404
 
 Summary:        A multimedia engine
 Name:           xine-lib
@@ -324,6 +324,9 @@ mkdir -p $RPM_BUILD_ROOT%{codecdir}
 
 
 %changelog
+* Mon May 27 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-15.20190525hg14404
+- Update xine-lib snapshot.
+
 * Fri May 17 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-14.20190516hg14396
 - Update to xine-lib snapshot.
 - Add script to make a snapshot.
