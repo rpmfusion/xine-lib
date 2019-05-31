@@ -8,13 +8,13 @@
 %endif # ix86
 
 %global         snapshot    1
-%global         date        20190525
-%global         revision    14404
+%global         date        20190831
+%global         revision    14506
 
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        17%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        18%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -316,6 +316,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Tue Sep 03 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-18.20190831hg14506
+- Update xine-lib snapshot.
+
 * Wed Aug 21 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-17.20190525hg14404
 - Rebuild for aom SONAME bump
 - Drop XvMC support (rfbz #5328)
