@@ -64,6 +64,7 @@ BuildRequires:  libmng-devel
 BuildRequires:  libmodplug-devel
 BuildRequires:  libmpcdec-devel
 %{!?el6:BuildRequires:  libnfs-devel}
+%{?fedora:BuildRequires:  libpng-devel >= 1.6.0}
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libssh2-devel
 BuildRequires:  libtheora-devel
@@ -221,6 +222,7 @@ mkdir -p %{buildroot}%{codecdir}
 %endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libjpeg.so
 %{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libmmal.so}
+%{?fedora:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libpng.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libvpx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_lpcm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mad.so
@@ -318,6 +320,7 @@ mkdir -p %{buildroot}%{codecdir}
 %changelog
 * Tue Sep 03 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-18.20190831hg14506
 - Update xine-lib snapshot.
+- Enable libpng based video decoder.
 
 * Wed Aug 21 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-17.20190525hg14404
 - Rebuild for aom SONAME bump
