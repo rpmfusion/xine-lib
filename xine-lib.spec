@@ -56,6 +56,9 @@ BuildRequires:  jack-audio-connection-kit-devel
 %{!?el6:BuildRequires:  libbluray-devel >= 0.2.1}
 BuildRequires:  libcaca-devel
 BuildRequires:  libcdio-devel
+%if 0%{?fedora} >= 31
+BuildRequires:  libdav1d-devel >= 0.3.1
+%endif
 BuildRequires:  libdca-devel
 BuildRequires:  libdvdnav-devel
 BuildRequires:  libdvdread-devel
@@ -216,6 +219,9 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_oss.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_pulseaudio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_a52.so
+%if 0%{?fedora} >= 31
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dav1d.so
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dts.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dvaudio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_faad.so
@@ -328,6 +334,7 @@ mkdir -p %{buildroot}%{codecdir}
 - Update xine-lib snapshot.
 - Enable libpng based video decoder.
 - Add XvMC support back.
+- Enable libdav1d based video decoder (F31+).
 
 * Wed Aug 21 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-17.20190525hg14404
 - Rebuild for aom SONAME bump
