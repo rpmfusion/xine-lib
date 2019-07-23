@@ -48,10 +48,8 @@ BuildRequires:  gnutls-devel
 BuildRequires:  gtk2-devel
 BuildRequires:  ImageMagick-devel
 BuildRequires:  jack-audio-connection-kit-devel
-# Not available on EL6 and EL7
-%{?fedora:BuildRequires:  libaom-devel}
-# libbluray is too old on EL6
-%{!?el6:BuildRequires:  libbluray-devel}
+%{?fedora:BuildRequires:  libaom-devel >= 1.0.0}
+%{!?el6:BuildRequires:  libbluray-devel >= 0.2.1}
 BuildRequires:  libcaca-devel
 BuildRequires:  libcdio-devel
 BuildRequires:  libdca-devel
