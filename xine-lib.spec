@@ -14,7 +14,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        15%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        16%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -320,6 +320,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Tue Aug 06 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-16.20190525hg14404
+- Rebuild for new ffmpeg version
+
 * Mon May 27 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-15.20190525hg14404
 - Update xine-lib snapshot.
 - Remove now unneeded 32 bits build fix.
