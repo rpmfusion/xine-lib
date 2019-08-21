@@ -1,4 +1,4 @@
-%global         plugin_abi  2.7
+                                                                                                    %global         plugin_abi  2.7
 %global         codecdir    %{_libdir}/codecs
 
 %ifarch %{ix86}
@@ -14,7 +14,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        16%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        17%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -79,7 +79,6 @@ BuildRequires:  libXext-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  libXt-devel
 BuildRequires:  libXv-devel
-BuildRequires:  libXvMC-devel
 BuildRequires:  mesa-libEGL-devel
 %{!?el6:BuildRequires:  openssl-devel >= 1.0.2}
 BuildRequires:  pkgconfig(libpulse)
@@ -134,7 +133,6 @@ autoreconf -ivf
     --enable-ipv6 \
     --enable-v4l2 \
     --enable-libv4l \
-    --enable-xvmc \
     --disable-gnomevfs \
     --enable-antialiasing \
     --with-freetype \
@@ -320,6 +318,10 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Wed Aug 21 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-17.20190525hg14404
+- Rebuild for aom SONAME bump
+- Drop XvMC support (rfbz #5328)
+
 * Tue Aug 06 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-16.20190525hg14404
 - Rebuild for new ffmpeg version
 
