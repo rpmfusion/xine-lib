@@ -290,8 +290,6 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xcbxv.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xshm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xv.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xvmc.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xxmc.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_wavpack.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_xiph.so
 
