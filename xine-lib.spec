@@ -1,6 +1,10 @@
 %global         plugin_abi  2.7
 %global         codecdir    %{_libdir}/codecs
 
+%if 0%{?fedora} >= 31 || 0%{?rhel} >= 8
+    %global     _without_xvmc        1
+%endif
+
 %ifarch %{ix86}
     %global     have_vidix  1
 %else
@@ -78,6 +82,7 @@ BuildRequires:  libXext-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  libXt-devel
 BuildRequires:  libXv-devel
+%{!?_without_xvmc:BuildRequires:  libXvMC-devel}
 BuildRequires:  mesa-libEGL-devel
 %{!?el6:BuildRequires:  openssl-devel >= 1.0.2}
 BuildRequires:  pkgconfig(libpulse)
@@ -132,6 +137,7 @@ autoreconf -ivf
     --enable-ipv6 \
     --enable-v4l2 \
     --enable-libv4l \
+%{!?_without_xvmc:    --enable-xvmc} \
     --disable-gnomevfs \
     --enable-antialiasing \
     --with-freetype \
@@ -290,6 +296,8 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xcbxv.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xshm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xv.so
+%{!?_without_xvmc:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xvmc.so}
+%{!?_without_xvmc:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xxmc.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_wavpack.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_xiph.so
 
@@ -319,6 +327,7 @@ mkdir -p %{buildroot}%{codecdir}
 * Tue Sep 03 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-18.20190831hg14506
 - Update xine-lib snapshot.
 - Enable libpng based video decoder.
+- Add XvMC support back.
 
 * Wed Aug 21 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-17.20190525hg14404
 - Rebuild for aom SONAME bump
