@@ -47,7 +47,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        18%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        19%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -261,9 +261,6 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mad.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mpc.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mpeg2.so
-%ifarch %{ix86}
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_qt.so
-%endif # ix86
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_rawvideo.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_real.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spu.so
@@ -353,6 +350,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Tue Sep 03 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-19.20190831hg14506
+- Fix 32 bits build.
+
 * Tue Sep 03 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-18.20190831hg14506
 - Update xine-lib snapshot.
 - Enable libpng based video decoder.
