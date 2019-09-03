@@ -16,6 +16,16 @@
     %global     _without_png         1
 %endif
 
+%if 0%{?el8}
+    %global     _without_aom         1
+    %global     _without_caca        1
+    %global     _without_dav1d       1
+    %global     _without_fame        1
+    %global     _without_imagemagick 1
+    %global     _without_jack        1
+    %global     _without_nfs         1
+%endif
+
 %if 0%{?fc29}%{?fc30}
     %global     _without_dav1d       1
 %endif
@@ -349,6 +359,7 @@ mkdir -p %{buildroot}%{codecdir}
 - Add XvMC support back.
 - Enable libdav1d based video decoder (F31+).
 - Rework features enablement.
+- Disable currently missing features on EL8.
 
 * Wed Aug 21 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-17.20190525hg14404
 - Rebuild for aom SONAME bump
