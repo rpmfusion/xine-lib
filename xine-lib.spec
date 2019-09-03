@@ -1,4 +1,4 @@
-                                                                                                    %global         plugin_abi  2.7
+%global         plugin_abi  2.7
 %global         codecdir    %{_libdir}/codecs
 
 %ifarch %{ix86}
