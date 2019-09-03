@@ -1,6 +1,25 @@
 %global         plugin_abi  2.7
 %global         codecdir    %{_libdir}/codecs
 
+%if 0%{?el6}
+    %global     _without_aom         1
+    %global     _without_bluray      1
+    %global     _without_dav1d       1
+    %global     _without_nfs         1
+    %global     _without_openssl     1
+    %global     _without_png         1
+%endif
+
+%if 0%{?el7}
+    %global     _without_aom         1
+    %global     _without_dav1d       1
+    %global     _without_png         1
+%endif
+
+%if 0%{?fc29}%{?fc30}
+    %global     _without_dav1d       1
+%endif
+
 %if 0%{?fedora} >= 31 || 0%{?rhel} >= 8
     %global     _without_xvmc        1
 %endif
@@ -50,26 +69,24 @@ BuildRequires:  gcc
 BuildRequires:  gettext-devel
 BuildRequires:  gnutls-devel
 BuildRequires:  gtk2-devel
-BuildRequires:  ImageMagick-devel
-BuildRequires:  jack-audio-connection-kit-devel
-%{?fedora:BuildRequires:  libaom-devel >= 1.0.0}
-%{!?el6:BuildRequires:  libbluray-devel >= 0.2.1}
-BuildRequires:  libcaca-devel
+%{!?_without_imagemagick:BuildRequires:  ImageMagick-devel}
+%{!?_without_jack:BuildRequires:  jack-audio-connection-kit-devel}
+%{!?_without_aom:BuildRequires:  libaom-devel >= 1.0.0}
+%{!?_without_bluray:BuildRequires:  libbluray-devel >= 0.2.1}
+%{!?_without_caca:BuildRequires:  libcaca-devel}
 BuildRequires:  libcdio-devel
-%if 0%{?fedora} >= 31
-BuildRequires:  libdav1d-devel >= 0.3.1
-%endif
+%{!?_without_dav1d:BuildRequires:  libdav1d-devel >= 0.3.1}
 BuildRequires:  libdca-devel
 BuildRequires:  libdvdnav-devel
 BuildRequires:  libdvdread-devel
-BuildRequires:  libfame-devel
+%{!?_without_fame:BuildRequires:  libfame-devel}
 BuildRequires:  libGLU-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmng-devel
 BuildRequires:  libmodplug-devel
 BuildRequires:  libmpcdec-devel
-%{!?el6:BuildRequires:  libnfs-devel}
-%{?fedora:BuildRequires:  libpng-devel >= 1.6.0}
+%{!?_without_nfs:BuildRequires:  libnfs-devel}
+%{!?_without_png:BuildRequires:  libpng-devel >= 1.6.0}
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libssh2-devel
 BuildRequires:  libtheora-devel
@@ -87,7 +104,7 @@ BuildRequires:  libXt-devel
 BuildRequires:  libXv-devel
 %{!?_without_xvmc:BuildRequires:  libXvMC-devel}
 BuildRequires:  mesa-libEGL-devel
-%{!?el6:BuildRequires:  openssl-devel >= 1.0.2}
+%{!?_without_openssl:BuildRequires:  openssl-devel >= 1.0.2}
 BuildRequires:  pkgconfig(libpulse)
 %{?_with_rpi:BuildRequires: raspberrypi-vc-devel}
 BuildRequires:  SDL-devel
@@ -114,13 +131,13 @@ Summary:        Additional plugins for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 %description    extras
 This package contains extra plugins for %{name}:
-  - JACK
+%{!?_without_jack:  - JACK}
   - GDK-Pixbuf
   - SMB
   - SDL
   - AA-lib
-  - Libcaca
-  - Image decoding
+%{!?_without_caca:  - Libcaca}
+%{!?_without_imagemagick:  - Image decoding}
 
 
 %prep
@@ -145,7 +162,7 @@ autoreconf -ivf
     --enable-antialiasing \
     --with-freetype \
     --with-fontconfig \
-    --with-caca \
+%{!?_without_caca:    --with-caca} \
     --with-external-dvdnav \
     --with-xv-path=%{_libdir} \
     --with-libflac \
@@ -219,20 +236,16 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_oss.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_pulseaudio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_a52.so
-%if 0%{?fedora} >= 31
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dav1d.so
-%endif
+%{!?_without_dav1d:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dav1d.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dts.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dvaudio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_faad.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_ff.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_gsm610.so
-%if 0%{?fedora}
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libaom.so
-%endif
+%{!?_without_aom:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libaom.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libjpeg.so
 %{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libmmal.so}
-%{?fedora:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libpng.so}
+%{!?_without_png:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libpng.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libvpx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_lpcm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_mad.so
@@ -266,13 +279,13 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_video.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dxr3.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_flac.so
-%{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
+%{!?_without_bluray:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvd.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_mms.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_network.so
-%{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_nfs.so}
+%{!?_without_nfs:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_nfs.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pvr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so
@@ -283,7 +296,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_nsf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_sputext.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_gnutls.so
-%{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so}
+%{!?_without_openssl:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
 %{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_mmal.so}
@@ -308,12 +321,12 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_xiph.so
 
 %files extras
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_jack.so
+%{!?_without_jack:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_jack.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_gdk_pixbuf.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_image.so
+%{!?_without_imagemagick:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_image.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_smb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_aa.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_caca.so
+%{!?_without_caca:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_caca.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_sdl.so
 
 %files devel
@@ -335,6 +348,7 @@ mkdir -p %{buildroot}%{codecdir}
 - Enable libpng based video decoder.
 - Add XvMC support back.
 - Enable libdav1d based video decoder (F31+).
+- Rework features enablement.
 
 * Wed Aug 21 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-17.20190525hg14404
 - Rebuild for aom SONAME bump
