@@ -42,7 +42,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        20%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        21%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -345,6 +345,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Thu Oct 24 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-21.20190831hg14506
+- Rebuild for dav1d SONAME bump
+
 * Wed Sep 11 2019 Leigh Scott <leigh123linux@googlemail.com> - 1.2.9-20.20190831hg14506
 - Rebuild for new libnfs version
 
