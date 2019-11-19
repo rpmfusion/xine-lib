@@ -17,13 +17,8 @@
 %endif
 
 %if 0%{?el8}
-    %global     _without_aom         1
     %global     _without_caca        1
-    %global     _without_dav1d       1
-    %global     _without_fame        1
     %global     _without_imagemagick 1
-    %global     _without_jack        1
-    %global     _without_nfs         1
 %endif
 
 %if 0%{?fc29}%{?fc30}
@@ -47,7 +42,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        19%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        22%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -350,6 +345,15 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Fri Nov 15 2019 Dominik 'Rathann' Mierzejewski <rpm@greysector.net> - 1.2.9-22.20190831hg14506
+- rebuild for libdvdread ABI bump
+
+* Thu Oct 24 2019 Leigh Scott <leigh123linux@gmail.com> - 1.2.9-21.20190831hg14506
+- Rebuild for dav1d SONAME bump
+
+* Wed Sep 11 2019 Leigh Scott <leigh123linux@googlemail.com> - 1.2.9-20.20190831hg14506
+- Rebuild for new libnfs version
+
 * Tue Sep 03 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-19.20190831hg14506
 - Fix 32 bits build.
 
