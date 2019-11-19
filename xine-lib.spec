@@ -47,7 +47,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.9
-Release:        19%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        20%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -350,6 +350,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Tue Nov 19 2019 Robert-André Mauchin <zebob.m@gmail.com> - 1.2.9-20.20190831hg14506
+- Rebuild for dav1d 0.5.1
+
 * Tue Sep 03 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.9-19.20190831hg14506
 - Fix 32 bits build.
 
