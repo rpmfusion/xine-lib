@@ -11,14 +11,8 @@
 %endif
 
 %if 0%{?el7}
-    %global     _without_aom         1
     %global     _without_dav1d       1
     %global     _without_png         1
-%endif
-
-%if 0%{?el8}
-    %global     _without_caca        1
-    %global     _without_imagemagick 1
 %endif
 
 %if 0%{?fc29}%{?fc30}
