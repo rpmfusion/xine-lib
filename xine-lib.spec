@@ -1,4 +1,4 @@
-%global         plugin_abi  2.7
+%global         plugin_abi  2.8
 %global         codecdir    %{_libdir}/codecs
 
 %if 0%{?el6}
@@ -29,14 +29,14 @@
     %global     have_vidix  0
 %endif # ix86
 
-%global         snapshot    1
-%global         date        20190831
-%global         revision    14506
+#global         snapshot    1
+#global         date        20190831
+#global         revision    14506
 
 Summary:        A multimedia engine
 Name:           xine-lib
-Version:        1.2.9
-Release:        22%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Version:        1.2.10
+Release:        1%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -339,6 +339,11 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Fri Dec 13 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.10-1
+- Update to 1.2.10.
+- Enable aom for EL7.
+- Enable libcaca and ImageMagick for EL8.
+
 * Fri Nov 15 2019 Dominik 'Rathann' Mierzejewski <rpm@greysector.net> - 1.2.9-22.20190831hg14506
 - rebuild for libdvdread ABI bump
 
