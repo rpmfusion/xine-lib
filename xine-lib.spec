@@ -21,6 +21,7 @@
 
 %if 0%{?fedora} >= 31 || 0%{?rhel} >= 8
     %global     _without_xvmc        1
+    %global     _without_libssh2     1
 %endif
 
 %ifarch %{ix86}
@@ -36,7 +37,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.10
-Release:        1%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        2%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -87,7 +88,7 @@ BuildRequires:  libmpcdec-devel
 %{!?_without_nfs:BuildRequires:  libnfs-devel}
 %{!?_without_png:BuildRequires:  libpng-devel >= 1.6.0}
 BuildRequires:  libsmbclient-devel
-BuildRequires:  libssh2-devel
+%{!?_without_libssh2:BuildRequires:  libssh2-devel}
 BuildRequires:  libtheora-devel
 BuildRequires:  libtool
 BuildRequires:  libv4l-devel
@@ -284,7 +285,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{!?_without_nfs:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_nfs.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pvr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so
+%{!?_without_libssh2:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so}
 %{?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
@@ -339,6 +340,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Sat Jan 18 2020 Xavier Bachelot <xavier@bachelot.org> 1.2.10-2
+- Disable libssh2 for EL8.
+
 * Fri Dec 13 2019 Xavier Bachelot <xavier@bachelot.org> 1.2.10-1
 - Update to 1.2.10.
 - Enable aom for EL7.
