@@ -37,7 +37,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.10
-Release:        2%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        3%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -340,6 +340,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Wed Feb 05 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.10-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Sat Jan 18 2020 Xavier Bachelot <xavier@bachelot.org> 1.2.10-2
 - Disable libssh2 for EL8.
 
