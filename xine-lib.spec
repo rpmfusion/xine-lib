@@ -1,3 +1,4 @@
+%define _legacy_common_support 1
 %global         plugin_abi  2.8
 %global         codecdir    %{_libdir}/codecs
 
