@@ -38,7 +38,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.10
-Release:        4%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        5%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -341,6 +341,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Fri Apr 10 2020 Leigh Scott <leigh123linux@gmail.com> - 1.2.10-5
+- Rebuild for new libcdio version
+
 * Sat Feb 22 2020 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 1.2.10-4
 - Rebuild for ffmpeg-4.3 git
 
