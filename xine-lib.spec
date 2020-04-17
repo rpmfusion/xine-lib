@@ -22,7 +22,6 @@
 
 %if 0%{?fedora} >= 31 || 0%{?rhel} >= 8
     %global     _without_xvmc        1
-    %global     _without_libssh2     1
 %endif
 
 %ifarch %{ix86}
@@ -38,7 +37,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.10
-Release:        10%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        11%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -160,6 +159,7 @@ autoreconf -ivf
     --enable-libv4l \
 %{!?_without_xvmc:    --enable-xvmc} \
     --disable-gnomevfs \
+%{?_without_libssh2:    --disable-sftp} \
     --enable-antialiasing \
     --with-freetype \
     --with-fontconfig \
@@ -341,6 +341,10 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Sat Oct 17 2020 Xavier Bachelot <xavier@bachelot.org> 1.2.10-11
+- Re-enable libssh2 for EL8 and F31+
+- Fix build if libssh2 support is disabled but libssh2-devel is installed (RFBZ#5796)
+
 * Wed Aug 19 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.10-10
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
