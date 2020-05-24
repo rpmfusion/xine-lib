@@ -38,7 +38,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.10
-Release:        6%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        7%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -341,6 +341,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Sun May 24 2020 Leigh Scott <leigh123linux@gmail.com> - 1.2.10-7
+- Rebuild for dav1d SONAME bump
+
 * Wed May 20 2020 Sérgio Basto <sergio@serjux.com> - 1.2.10-6
 - Rebuild for ImageMagick on el7
 
