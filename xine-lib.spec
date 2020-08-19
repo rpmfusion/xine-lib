@@ -38,7 +38,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.10
-Release:        9%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        10%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -341,6 +341,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Wed Aug 19 2020 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.10-10
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+
 * Wed Jul 08 2020 Leigh Scott <leigh123linux@gmail.com> - 1.2.10-9
 - Rebuilt
 
