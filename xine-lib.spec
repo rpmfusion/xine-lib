@@ -37,7 +37,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.10
-Release:        11%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        12%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -341,6 +341,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Wed Oct 21 2020 Leigh Scott <leigh123linux@gmail.com> - 1.2.10-12
+- Rebuild for new libdvdread
+
 * Sat Oct 17 2020 Xavier Bachelot <xavier@bachelot.org> 1.2.10-11
 - Re-enable libssh2 for EL8 and F31+
 - Fix build if libssh2 support is disabled but libssh2-devel is installed (RFBZ#5796)
