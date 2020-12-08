@@ -1,5 +1,5 @@
 %define _legacy_common_support 1
-%global         plugin_abi  2.8
+%global         plugin_abi  2.9
 %global         codecdir    %{_libdir}/codecs
 
 %if 0%{?el6}
@@ -36,8 +36,8 @@
 
 Summary:        A multimedia engine
 Name:           xine-lib
-Version:        1.2.10
-Release:        12%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Version:        1.2.11
+Release:        1%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -259,6 +259,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spucmml.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spudvb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_spuhdmv.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_to_spdif.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau.so
 %ifarch %{ix86}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_w32dll.so
@@ -341,6 +342,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Tue Dec 08 2020 Xavier Bachelot <xavier@bachelot.org> 1.2.11-1
+- Update to 1.2.11
+
 * Wed Oct 21 2020 Leigh Scott <leigh123linux@gmail.com> - 1.2.10-12
 - Rebuild for new libdvdread
 
