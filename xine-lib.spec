@@ -2,22 +2,9 @@
 %global         plugin_abi  2.9
 %global         codecdir    %{_libdir}/codecs
 
-%if 0%{?el6}
-    %global     _without_aom         1
-    %global     _without_bluray      1
-    %global     _without_dav1d       1
-    %global     _without_nfs         1
-    %global     _without_openssl     1
-    %global     _without_png         1
-%endif
-
 %if 0%{?el7}
     %global     _without_dav1d       1
     %global     _without_png         1
-%endif
-
-%if 0%{?fc29}%{?fc30}
-    %global     _without_dav1d       1
 %endif
 
 %if 0%{?fedora} >= 31 || 0%{?rhel} >= 8
