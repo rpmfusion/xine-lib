@@ -24,7 +24,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.11
-Release:        1%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        2%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -323,6 +323,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Fri Dec 11 2020 Xavier Bachelot <xavier@bachelot.org> 1.2.11-2
+- Drop support for EOL distros
+
 * Tue Dec 08 2020 Xavier Bachelot <xavier@bachelot.org> 1.2.11-1
 - Update to 1.2.11
 
