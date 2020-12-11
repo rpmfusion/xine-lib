@@ -35,10 +35,6 @@ Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 # Script to make a snapshot
 Source1:        make_xinelib_snapshot.sh
 
-# Based on:
-# https://sourceforge.net/p/xine/xine-lib-1.2/ci/ba01d04fe4d50a67302ed3cdbf69fe62995313bd/
-Patch1:         xine-lib-1.2.9-revert_update_gettext.patch
-
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
 
@@ -133,7 +129,6 @@ This package contains extra plugins for %{name}:
 %else
 %setup -q -n %{name}-%{version}-%{date}hg%{revision}
 %endif
-%{?el6:%patch1 -p1}
 autoreconf -ivf
 
 
@@ -275,7 +270,6 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pvr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
 %{!?_without_libssh2:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so}
-%{?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so
@@ -288,7 +282,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_mmal.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_glx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_x11.so
-%{!?el6:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_wl.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_wl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_raw.so
