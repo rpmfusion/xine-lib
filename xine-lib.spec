@@ -24,7 +24,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.11
-Release:        3%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        4%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -323,6 +323,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Mon Dec 14 2020 Leigh Scott <leigh123linux@gmail.com> - 1.2.11-4
+- Actually do the dav1d rebuild
+
 * Mon Dec 14 2020 Robert-André Mauchin <zebob.m@gmail.com> 1.2.11-3
 - Rebuild for dav1d SONAME bump
 
