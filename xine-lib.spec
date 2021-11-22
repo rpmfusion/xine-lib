@@ -323,8 +323,8 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
-* Tue Nov 09 2021 Leigh Scott <leigh123linux@gmail.com> - 1.2.11-9
-- Rebuilt for new ffmpeg snapshot
+* Mon Nov 22 2021 Sérgio Basto <sergio@serjux.com> - 1.2.11-9
+- Rebuilt for new ImageMagick
 
 * Tue Aug 03 2021 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 1.2.11-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
