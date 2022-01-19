@@ -24,7 +24,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.11
-Release:        11%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        12%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -323,6 +323,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Wed Jan 19 2022 Nicolas Chauvet <kwizart@gmail.com> - 1.2.11-12
+- Rebuilt
+
 * Sat Dec 11 2021 Sérgio Basto <sergio@serjux.com> - 1.2.11-11
 - Rebuilt for new ImageMagick on F34
 
