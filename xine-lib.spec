@@ -35,6 +35,8 @@ Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 # Script to make a snapshot
 Source1:        make_xinelib_snapshot.sh
 
+Patch0:         Fix_build_with_libcaca.patch
+
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
 
@@ -129,6 +131,7 @@ This package contains extra plugins for %{name}:
 %else
 %setup -q -n %{name}-%{version}-%{date}hg%{revision}
 %endif
+%patch0 -p1
 autoreconf -ivf
 
 
