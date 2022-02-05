@@ -17,14 +17,14 @@
     %global     have_vidix  0
 %endif # ix86
 
-#global         snapshot    1
-#global         date        20190831
-#global         revision    14506
+%global         snapshot    1
+%global         date        20220131
+%global         revision    15030
 
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.11
-Release:        12%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        13%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            http://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -34,8 +34,6 @@ Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 %endif
 # Script to make a snapshot
 Source1:        make_xinelib_snapshot.sh
-
-Patch0:         Fix_build_with_libcaca.patch
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -131,7 +129,6 @@ This package contains extra plugins for %{name}:
 %else
 %setup -q -n %{name}-%{version}-%{date}hg%{revision}
 %endif
-%patch0 -p1
 autoreconf -ivf
 
 
@@ -326,6 +323,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Sat Feb 05 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.11-13.20220131hg15030
+- Update to xine-lib snapshot.
+
 * Wed Jan 19 2022 Nicolas Chauvet <kwizart@gmail.com> - 1.2.11-12
 - Rebuilt
 
