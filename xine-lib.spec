@@ -260,6 +260,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_video.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dxr3.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_flac.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_hw_frame_vaapi.so
 %{!?_without_bluray:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvb.so
@@ -277,6 +278,10 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_sputext.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_gnutls.so
 %{!?_without_openssl:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_drm.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_glx.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_wl.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_x11.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
 %{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_mmal.so}
