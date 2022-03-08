@@ -1,4 +1,4 @@
-%define _legacy_common_support 1
+%define         _legacy_common_support 1
 %global         plugin_abi  2.9
 %global         codecdir    %{_libdir}/codecs
 
@@ -26,9 +26,9 @@ Name:           xine-lib
 Version:        1.2.11
 Release:        13%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
-URL:            http://www.xine-project.org/
+URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
-Source0:        http://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
+Source0:        https://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
 %else
 Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 %endif
@@ -94,6 +94,7 @@ BuildRequires:  SDL-devel
 BuildRequires:  speex-devel
 BuildRequires:  vcdimager-devel
 BuildRequires:  wavpack-devel
+BuildRequires:  wayland-devel
 
 
 %description
