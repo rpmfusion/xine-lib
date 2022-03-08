@@ -39,7 +39,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.11
-Release:        13%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        14%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -348,6 +348,11 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Tue Mar 08 2022 Xavier Bachelot <xavier@bachelot.org> 1.2.11-14.20220307hg15076
+- Specfile clean up
+- Update xine-lib snapshot
+- Add support for EL9
+
 * Sat Feb 05 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.11-13.20220131hg15030
 - Update to xine-lib snapshot.
 
