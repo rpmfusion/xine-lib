@@ -18,8 +18,8 @@
 %endif # ix86
 
 %global         snapshot    1
-%global         date        20220131
-%global         revision    15030
+%global         date        20220307
+%global         revision    15076
 
 Summary:        A multimedia engine
 Name:           xine-lib
@@ -63,6 +63,7 @@ BuildRequires:  libdca-devel
 BuildRequires:  libdvdnav-devel
 BuildRequires:  libdvdread-devel
 %{!?_without_fame:BuildRequires:  libfame-devel}
+BuildRequires:  libgcrypt-devel
 BuildRequires:  libGLU-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmng-devel
@@ -264,6 +265,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_hw_frame_vaapi.so
 %{!?_without_bluray:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_crypto.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvd.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_mms.so
