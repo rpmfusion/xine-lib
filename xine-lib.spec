@@ -7,6 +7,21 @@
     %global     _without_png         1
 %endif
 
+%if 0%{?el9}
+    # RHBZ 2031269
+    %global     _without_caca        1
+    # RHBZ 2031269 / 2031744
+    %global     _without_dvdnav      1
+    # RHBZ 2030919
+    %global     _without_jack        1
+    # RHBZ 2031270
+    %global     _without_nfs         1
+    # RHBZ  2058802 / 2059006
+%ifarch aarch64 ppc64le s390x
+    %global     _without_va          1
+%endif
+%endif
+
 %if 0%{?fedora} >= 31 || 0%{?rhel} >= 8
     %global     _without_xvmc        1
 %endif
@@ -60,7 +75,7 @@ BuildRequires:  gtk2-devel
 BuildRequires:  libcdio-devel
 %{!?_without_dav1d:BuildRequires:  libdav1d-devel >= 0.3.1}
 BuildRequires:  libdca-devel
-BuildRequires:  libdvdnav-devel
+%{!?_without_dvdnav:BuildRequires:  libdvdnav-devel}
 BuildRequires:  libdvdread-devel
 %{!?_without_fame:BuildRequires:  libfame-devel}
 BuildRequires:  libgcrypt-devel
@@ -76,7 +91,7 @@ BuildRequires:  libsmbclient-devel
 BuildRequires:  libtheora-devel
 BuildRequires:  libtool
 BuildRequires:  libv4l-devel
-BuildRequires:  libva-devel
+%{!?_without_va:BuildRequires:  libva-devel}
 BuildRequires:  libvdpau-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  libvpx-devel
@@ -93,7 +108,7 @@ BuildRequires:  pkgconfig(libpulse)
 %{?_with_rpi:BuildRequires: raspberrypi-vc-devel}
 BuildRequires:  SDL-devel
 BuildRequires:  speex-devel
-BuildRequires:  vcdimager-devel
+%{!?_without_vcd:BuildRequires:  vcdimager-devel}
 BuildRequires:  wavpack-devel
 BuildRequires:  wayland-devel
 
@@ -148,7 +163,7 @@ autoreconf -ivf
     --with-freetype \
     --with-fontconfig \
 %{!?_without_caca:    --with-caca} \
-    --with-external-dvdnav \
+%{!?_without_dvdnav:    --with-external-dvdnav} \
     --with-xv-path=%{_libdir} \
     --with-libflac \
     --without-esound \
@@ -262,7 +277,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_video.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dxr3.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_flac.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_hw_frame_vaapi.so
+%{!?_without_va:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_hw_frame_vaapi.so}
 %{!?_without_bluray:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_crypto.so
@@ -275,16 +290,18 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
 %{!?_without_libssh2:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l2.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so
+%{!?_without_vcd:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so}
+%{!?_without_vcd:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_nsf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_sputext.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_gnutls.so
 %{!?_without_openssl:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so}
+%if ! 0%{?_without_va}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_drm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_glx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_wl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_x11.so
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
 %{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_mmal.so}
@@ -294,7 +311,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_raw.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vaapi.so
+%{!?_without_va:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vaapi.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vdpau.so
 %if %{have_vidix}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vidix.so
