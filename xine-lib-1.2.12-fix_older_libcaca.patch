@@ -1,0 +1,22 @@
+# HG changeset patch
+# User Xavier Bachelot <xavier@bachelot.org>
+# Date 1646916446 -3600
+#      Thu Mar 10 13:47:26 2022 +0100
+# Node ID 6488085f778dd8115562ca308e2a60b502954dfc
+# Parent  41217d6440d1f52478180d7e477aa7e7df953507
+Fix build with older libcaca
+
+This was introduced in 3f383e
+
+diff -r 41217d6440d1 -r 6488085f778d src/video_out/video_out_caca.c
+--- a/src/video_out/video_out_caca.c	Wed Mar 09 15:12:14 2022 +0200
++++ b/src/video_out/video_out_caca.c	Thu Mar 10 13:47:26 2022 +0100
+@@ -44,7 +44,7 @@
+ #  define caca_get_canvas_height cucul_get_canvas_height
+ #  define caca_free_canvas cucul_free_canvas
+ #  define caca_dither_t cucul_dither_t
+-#  define caca_create_dither define cucul_create_dither
++#  define caca_create_dither cucul_create_dither
+ #  define caca_dither_bitmap cucul_dither_bitmap
+ #  define caca_free_dither cucul_free_dither
+ #endif
