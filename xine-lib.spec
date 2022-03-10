@@ -1,5 +1,5 @@
 %define         _legacy_common_support 1
-%global         plugin_abi  2.9
+%global         plugin_abi  2.10
 %global         codecdir    %{_libdir}/codecs
 
 %if 0%{?el7}
@@ -32,14 +32,14 @@
     %global     have_vidix  0
 %endif # ix86
 
-%global         snapshot    1
-%global         date        20220307
-%global         revision    15076
+#global         snapshot    1
+#global         date        20220307
+#global         revision    15076
 
 Summary:        A multimedia engine
 Name:           xine-lib
-Version:        1.2.11
-Release:        14%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Version:        1.2.12
+Release:        1%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -348,6 +348,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Thu Mar 10 2022 Xavier Bachelot <xavier@bachelot.org> - 1.2.12-1
+- Update to 1.2.12
+
 * Tue Mar 08 2022 Xavier Bachelot <xavier@bachelot.org> 1.2.11-14.20220307hg15076
 - Specfile clean up
 - Update xine-lib snapshot
