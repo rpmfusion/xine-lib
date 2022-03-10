@@ -4,7 +4,12 @@
 
 %if 0%{?el7}
     %global     _without_dav1d       1
+    %global     _without_gcrypt      1
     %global     _without_png         1
+%endif
+
+%if 0%{?el8}
+    %global     _without_gcrypt      1
 %endif
 
 %if 0%{?el9}
@@ -39,7 +44,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.12
-Release:        1%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        2%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -49,6 +54,8 @@ Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 %endif
 # Script to make a snapshot
 Source1:        make_xinelib_snapshot.sh
+
+Patch1:         xine-lib-1.2.12-fix_older_libcaca.patch
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -78,7 +85,7 @@ BuildRequires:  libdca-devel
 %{!?_without_dvdnav:BuildRequires:  libdvdnav-devel}
 BuildRequires:  libdvdread-devel
 %{!?_without_fame:BuildRequires:  libfame-devel}
-BuildRequires:  libgcrypt-devel
+%{!?_without_gcrypt:BuildRequires:  libgcrypt-devel}
 BuildRequires:  libGLU-devel
 BuildRequires:  libmad-devel
 BuildRequires:  libmng-devel
@@ -143,6 +150,7 @@ This package contains extra plugins for %{name}:
 %prep
 %if ! 0%{?snapshot}
 %setup -q
+%patch1 -p1
 %else
 %setup -q -n %{name}-%{version}-%{date}hg%{revision}
 %endif
@@ -280,7 +288,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{!?_without_va:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_hw_frame_vaapi.so}
 %{!?_without_bluray:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_crypto.so
+%{!?_without_gcrypt:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_crypto.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvd.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_mms.so
@@ -348,6 +356,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Thu Mar 10 2022 Xavier Bachelot <xavier@bachelot.org> - 1.2.12-2
+- Fix build on EL7 and EL8
+
 * Thu Mar 10 2022 Xavier Bachelot <xavier@bachelot.org> - 1.2.12-1
 - Update to 1.2.12
 
