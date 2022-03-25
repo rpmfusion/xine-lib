@@ -44,7 +44,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.12
-Release:        2%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        3%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -55,7 +55,10 @@ Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 # Script to make a snapshot
 Source1:        make_xinelib_snapshot.sh
 
+# https://sourceforge.net/p/xine/xine-lib-1.2/ci/928cdea835e656d6e1411c767eace0d10b6cc452/
 Patch1:         xine-lib-1.2.12-fix_older_libcaca.patch
+# https://sourceforge.net/p/xine/xine-lib-1.2/ci/97248a71021428baa49e2b2af34f566a3257452a/
+Patch2:         xine-lib-1.2.12-dav1d_100_support.patch
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -151,6 +154,7 @@ This package contains extra plugins for %{name}:
 %if ! 0%{?snapshot}
 %setup -q
 %patch1 -p1
+%patch2 -p1
 %else
 %setup -q -n %{name}-%{version}-%{date}hg%{revision}
 %endif
@@ -356,6 +360,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Fri Mar 25 2022 Xavier Bachelot <xavier@bachelot.org> - 1.2.12-3
+- Add patch for dav1d 1.0.0 support
+
 * Thu Mar 10 2022 Xavier Bachelot <xavier@bachelot.org> - 1.2.12-2
 - Fix build on EL7 and EL8
 
