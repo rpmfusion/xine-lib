@@ -44,7 +44,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.12
-Release:        3%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        4%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -360,6 +360,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Thu Jun 23 2022 Robert-André Mauchin <zebob.m@gmail.com> - 1.2.12-4
+- Rebuilt for new AOM, dav1d and jpegxl
+
 * Fri Mar 25 2022 Xavier Bachelot <xavier@bachelot.org> - 1.2.12-3
 - Add patch for dav1d 1.0.0 support
 
