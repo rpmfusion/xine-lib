@@ -44,7 +44,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.12
-Release:        4%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        5%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -360,6 +360,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Sat Jul 23 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.12-5
+- Rebuild for new ffmpeg
+
 * Thu Jun 23 2022 Robert-André Mauchin <zebob.m@gmail.com> - 1.2.12-4
 - Rebuilt for new AOM, dav1d and jpegxl
 
