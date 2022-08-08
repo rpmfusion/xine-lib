@@ -44,7 +44,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.12
-Release:        5%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        6%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -360,6 +360,10 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Mon Aug 08 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.2.12-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
+  5.1
+
 * Sat Jul 23 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.12-5
 - Rebuild for new ffmpeg
 
