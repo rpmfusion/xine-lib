@@ -59,6 +59,7 @@ Source1:        make_xinelib_snapshot.sh
 Patch1:         xine-lib-1.2.12-fix_older_libcaca.patch
 # https://sourceforge.net/p/xine/xine-lib-1.2/ci/97248a71021428baa49e2b2af34f566a3257452a/
 Patch2:         xine-lib-1.2.12-dav1d_100_support.patch
+Patch3:         ffmpeg51.patch
 
 Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 %{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
@@ -155,6 +156,7 @@ This package contains extra plugins for %{name}:
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %else
 %setup -q -n %{name}-%{version}-%{date}hg%{revision}
 %endif
