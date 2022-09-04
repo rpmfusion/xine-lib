@@ -44,7 +44,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.12
-Release:        6%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        7%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -66,6 +66,8 @@ Provides:         xine-lib(plugin-abi) = %{plugin_abi}
 
 Obsoletes:      xine-lib-extras-freeworld < 1.1.21-10
 Provides:       xine-lib-extras-freeworld = %{version}-%{release}
+
+Requires:       ffmpeg-libs%{?_isa}
 
 BuildRequires:  a52dec-devel
 BuildRequires:  aalib-devel
@@ -362,6 +364,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Sun Sep 04 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.12-7
+- Add requires ffmpeg-libs
+
 * Mon Aug 08 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.2.12-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
   5.1
