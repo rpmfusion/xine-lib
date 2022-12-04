@@ -35,7 +35,7 @@
     %global     have_vidix  1
 %else
     %global     have_vidix  0
-%endif # ix86
+%endif
 
 #global         snapshot    1
 #global         date        20220307
@@ -247,7 +247,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/vidix/savage_vid.so
 %{_libdir}/xine/plugins/%{plugin_abi}/vidix/sis_vid.so
 %{_libdir}/xine/plugins/%{plugin_abi}/vidix/unichrome_vid.so
-%endif # vidix
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_alsa.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_oss.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_pulseaudio.so
@@ -278,7 +278,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau.so
 %ifarch %{ix86}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_w32dll.so
-%endif # ix86
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_asf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_audio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_fli.so
@@ -331,7 +331,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vdpau.so
 %if %{have_vidix}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vidix.so
-%endif # vidix
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xcbshm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xcbxv.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xshm.so
