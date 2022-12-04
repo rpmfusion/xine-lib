@@ -44,7 +44,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.12
-Release:        8%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        9%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -364,6 +364,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Sun Dec 04 2022 Sérgio Basto <sergio@serjux.com> - 1.2.12-9
+- Rebuild for libjxl on el9
+
 * Mon Sep 26 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.12-8
 - Rebuild for new flac
 
