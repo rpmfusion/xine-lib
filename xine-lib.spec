@@ -1,11 +1,12 @@
 %define         _legacy_common_support 1
-%global         plugin_abi  2.10
+%global         plugin_abi  2.11
 %global         codecdir    %{_libdir}/codecs
 
 %if 0%{?el7}
     %global     _without_dav1d       1
     %global     _without_gcrypt      1
     %global     _without_png         1
+    %global     _with_xvmc           1
 %endif
 
 %if 0%{?el8}
@@ -13,29 +14,21 @@
 %endif
 
 %if 0%{?el9}
-    # RHBZ 2031269
-    %global     _without_caca        1
-    # RHBZ 2031269 / 2031744
-    %global     _without_dvdnav      1
-    # RHBZ 2030919
-    %global     _without_jack        1
     # RHBZ 2031270
     %global     _without_nfs         1
-    # RHBZ  2058802 / 2059006
-%ifarch aarch64 ppc64le s390x
-    %global     _without_va          1
-%endif
 %endif
 
-%if 0%{?fedora} >= 31 || 0%{?rhel} >= 8
-    %global     _without_xvmc        1
+%if 0%{?fedora} || 0%{?rhel} >= 9
+# Not permitted in Fedora, ffmpeg covers this anyway
+%global _without_faad2 1
+%global _without_fame 1
 %endif
 
 %ifarch %{ix86}
     %global     have_vidix  1
 %else
     %global     have_vidix  0
-%endif # ix86
+%endif
 
 #global         snapshot    1
 #global         date        20220307
@@ -43,9 +36,9 @@
 
 Summary:        A multimedia engine
 Name:           xine-lib
-Version:        1.2.12
-Release:        2%{?snapshot:.%{date}hg%{revision}}%{?dist}
-License:        GPLv2+
+Version:        1.2.13
+Release:        3%{?snapshot:.%{date}hg%{revision}}%{?dist}
+License:        GPL-2.0-or-later
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
 Source0:        https://downloads.sourceforge.net/xine/xine-lib-%{version}.tar.xz
@@ -55,10 +48,12 @@ Source0:        xine-lib-%{version}-%{date}hg%{revision}.tar.xz
 # Script to make a snapshot
 Source1:        make_xinelib_snapshot.sh
 
-Patch1:         xine-lib-1.2.12-fix_older_libcaca.patch
+# ffmpeg6 compatibility
+# See: https://sourceforge.net/p/xine/xine-lib-1.2/ci/771f4ae27e582123ff3500444718fc8f96186d74/
+Patch0:         xine-lib-1.2.13-ffmpeg6-compatibility.patch
 
-Provides:         xine-lib(plugin-abi) = %{plugin_abi}
-%{?_isa:Provides: xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}}
+Provides:       xine-lib(plugin-abi) = %{plugin_abi}
+Provides:       xine-lib(plugin-abi)%{?_isa} = %{plugin_abi}
 
 Obsoletes:      xine-lib-extras-freeworld < 1.1.21-10
 Provides:       xine-lib-extras-freeworld = %{version}-%{release}
@@ -66,8 +61,12 @@ Provides:       xine-lib-extras-freeworld = %{version}-%{release}
 BuildRequires:  a52dec-devel
 BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
-BuildRequires:  faad2-devel
+%{!?_without_faad2:BuildRequires:  faad2-devel}
+%if 0%{?fedora} || 0%{?rhel} >= 9
+BuildRequires:  ffmpeg-free-devel
+%else
 BuildRequires:  ffmpeg-devel
+%endif
 BuildRequires:  flac-devel
 BuildRequires:  fontconfig-devel
 BuildRequires:  gcc
@@ -75,10 +74,14 @@ BuildRequires:  gettext-devel
 BuildRequires:  gnutls-devel
 BuildRequires:  gtk2-devel
 %{!?_without_imagemagick:BuildRequires:  ImageMagick-devel}
-%{!?_without_jack:BuildRequires:  jack-audio-connection-kit-devel}
-%{!?_without_aom:BuildRequires:  libaom-devel >= 1.0.0}
-%{!?_without_bluray:BuildRequires:  libbluray-devel >= 0.2.1}
-%{!?_without_caca:BuildRequires:  libcaca-devel}
+%if 0%{?fedora} || 0%{?rhel} >= 9
+BuildRequires:  pipewire-jack-audio-connection-kit-devel
+%else
+BuildRequires:  jack-audio-connection-kit-devel
+%endif
+BuildRequires:  libaom-devel >= 1.0.0
+BuildRequires:  libbluray-devel >= 0.2.1
+BuildRequires:  libcaca-devel
 BuildRequires:  libcdio-devel
 %{!?_without_dav1d:BuildRequires:  libdav1d-devel >= 0.3.1}
 BuildRequires:  libdca-devel
@@ -94,11 +97,11 @@ BuildRequires:  libmpcdec-devel
 %{!?_without_nfs:BuildRequires:  libnfs-devel}
 %{!?_without_png:BuildRequires:  libpng-devel >= 1.6.0}
 BuildRequires:  libsmbclient-devel
-%{!?_without_libssh2:BuildRequires:  libssh2-devel}
+BuildRequires:  libssh2-devel
 BuildRequires:  libtheora-devel
 BuildRequires:  libtool
 BuildRequires:  libv4l-devel
-%{!?_without_va:BuildRequires:  libva-devel}
+BuildRequires:  libva-devel
 BuildRequires:  libvdpau-devel
 BuildRequires:  libvorbis-devel
 BuildRequires:  libvpx-devel
@@ -108,14 +111,13 @@ BuildRequires:  libXext-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  libXt-devel
 BuildRequires:  libXv-devel
-%{!?_without_xvmc:BuildRequires:  libXvMC-devel}
+%{?_with_xvmc:BuildRequires:  libXvMC-devel}
 BuildRequires:  mesa-libEGL-devel
-%{!?_without_openssl:BuildRequires:  openssl-devel >= 1.0.2}
+BuildRequires:  openssl-devel >= 1.0.2
 BuildRequires:  pkgconfig(libpulse)
-%{?_with_rpi:BuildRequires: raspberrypi-vc-devel}
 BuildRequires:  SDL-devel
 BuildRequires:  speex-devel
-%{!?_without_vcd:BuildRequires:  vcdimager-devel}
+BuildRequires:  vcdimager-devel
 BuildRequires:  wavpack-devel
 BuildRequires:  wayland-devel
 
@@ -124,7 +126,7 @@ BuildRequires:  wayland-devel
 This package contains the Xine library.  It can be used to play back
 various media, decode multimedia files from local disk drives, and display
 multimedia streamed over the Internet. It interprets many of the most
-common multimedia formats available - and some uncommon formats, too. 
+common multimedia formats available - and some uncommon formats, too.
 
 %package        devel
 Summary:        Xine library development files
@@ -134,44 +136,39 @@ Requires:       zlib-devel%{?_isa}
 This package contains development files for %{name}.
 
 %package        extras
-Summary:        Additional plugins for %{name} 
+Summary:        Additional plugins for %{name}
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 %description    extras
 This package contains extra plugins for %{name}:
-%{!?_without_jack:  - JACK}
+  - JACK
   - GDK-Pixbuf
   - SMB
   - SDL
   - AA-lib
-%{!?_without_caca:  - Libcaca}
+  - Libcaca
 %{!?_without_imagemagick:  - Image decoding}
 
 
 %prep
-%if ! 0%{?snapshot}
-%setup -q
-%patch1 -p1
-%else
-%setup -q -n %{name}-%{version}-%{date}hg%{revision}
-%endif
-autoreconf -ivf
+%autosetup -p1 %{?snapshot:-n %{name}-%{version}-%{date}hg%{revision}}
 
 
 %build
+autoreconf -fiv
 # Keep list of options in mostly the same order as ./configure --help.
 %configure \
     --disable-dependency-tracking \
     --enable-ipv6 \
     --enable-v4l2 \
     --enable-libv4l \
-%{!?_without_xvmc:    --enable-xvmc} \
+%{?_with_xvmc:    --enable-xvmc} \
     --disable-gnomevfs \
-%{?_without_libssh2:    --disable-sftp} \
+    %{?_without_faad2:--disable-faad} \
     --enable-antialiasing \
     --with-freetype \
     --with-fontconfig \
-%{!?_without_caca:    --with-caca} \
-%{!?_without_dvdnav:    --with-external-dvdnav} \
+    --with-caca \
+    %{!?_without_dvdnav:--with-external-dvdnav} \
     --with-xv-path=%{_libdir} \
     --with-libflac \
     --without-esound \
@@ -183,7 +180,7 @@ autoreconf -ivf
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
-%make_build V=1
+%make_build
 
 
 %install
@@ -239,7 +236,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/vidix/savage_vid.so
 %{_libdir}/xine/plugins/%{plugin_abi}/vidix/sis_vid.so
 %{_libdir}/xine/plugins/%{plugin_abi}/vidix/unichrome_vid.so
-%endif # vidix
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_alsa.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_oss.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_pulseaudio.so
@@ -247,12 +244,11 @@ mkdir -p %{buildroot}%{codecdir}
 %{!?_without_dav1d:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dav1d.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dts.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_dvaudio.so
-%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_faad.so
+%{!?_without_faad2:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_faad.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_ff.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_gsm610.so
-%{!?_without_aom:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libaom.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libaom.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libjpeg.so
-%{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libmmal.so}
 %{!?_without_png:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libpng.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_libvpx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_lpcm.so
@@ -270,7 +266,7 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_vdpau.so
 %ifarch %{ix86}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_w32dll.so
-%endif # ix86
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_asf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_audio.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_fli.so
@@ -285,8 +281,8 @@ mkdir -p %{buildroot}%{codecdir}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dmx_video.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_dxr3.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_flac.so
-%{!?_without_va:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_hw_frame_vaapi.so}
-%{!?_without_bluray:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_hw_frame_vaapi.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_bluray.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_cdda.so
 %{!?_without_gcrypt:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_crypto.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_dvb.so
@@ -296,50 +292,47 @@ mkdir -p %{buildroot}%{codecdir}
 %{!?_without_nfs:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_nfs.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_pvr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_rtp.so
-%{!?_without_libssh2:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_ssh.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_v4l2.so
-%{!?_without_vcd:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so}
-%{!?_without_vcd:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcd.so
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_vcdo.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_nsf.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_sputext.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_gnutls.so
-%{!?_without_openssl:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so}
-%if ! 0%{?_without_va}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_tls_openssl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_drm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_glx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_wl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_va_display_x11.so
-%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vdr.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_fb.so
-%{?_with_rpi:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_mmal.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_glx.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_x11.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_gl_egl_wl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_opengl2.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_raw.so
-%{!?_without_va:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vaapi.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vaapi.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vdpau.so
 %if %{have_vidix}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_vidix.so
-%endif # vidix
+%endif
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xcbshm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xcbxv.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xshm.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xv.so
-%{!?_without_xvmc:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xvmc.so}
-%{!?_without_xvmc:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xxmc.so}
+%{?_with_xvmc:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xvmc.so}
+%{?_with_xvmc:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_xxmc.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_wavpack.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_xiph.so
 
 %files extras
-%{!?_without_jack:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_jack.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_ao_out_jack.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_gdk_pixbuf.so
 %{!?_without_imagemagick:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_decode_image.so}
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_inp_smb.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_aa.so
-%{!?_without_caca:%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_caca.so}
+%{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_caca.so
 %{_libdir}/xine/plugins/%{plugin_abi}/xineplug_vo_out_sdl.so
 
 %files devel
@@ -356,6 +349,46 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Sat Mar 18 2023 Xavier Bachelot <xavier@bachelot.org> - 1.2.13-3
+- Enable external libdvdnav for EL9
+- Restore specfile compatibility with RPM Fusion for EL7/8
+- Restore building from snapshot
+
+* Fri Mar 17 2023 Yaakov Selkowitz <yselkowi@redhat.com> - 1.2.13-2
+- Rebuilt for libmpcdec 1.3.0
+
+* Sun Mar 12 2023 Neal Gompa <ngompa@fedoraproject.org> - 1.2.13-1
+- Update to 1.2.13
+- Enable DTS/DCA and VCD support plugins
+
+* Wed Feb 15 2023 Tom Callaway <spot@fedoraproject.org> - 1.2.12-11
+- rebuild for libvpx
+
+* Mon Jan 23 2023 Neal Gompa <ngompa@fedoraproject.org> - 1.2.12-10
+- Adapt for Fedora
+
+* Sun Dec 04 2022 Sérgio Basto <sergio@serjux.com> - 1.2.12-9
+- Rebuild for libjxl on el9
+
+* Mon Sep 26 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.12-8
+- Rebuild for new flac
+
+* Sun Sep 04 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.12-7
+- Add requires ffmpeg-libs
+
+* Mon Aug 08 2022 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.2.12-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild and ffmpeg
+  5.1
+
+* Sat Jul 23 2022 Leigh Scott <leigh123linux@gmail.com> - 1.2.12-5
+- Rebuild for new ffmpeg
+
+* Thu Jun 23 2022 Robert-André Mauchin <zebob.m@gmail.com> - 1.2.12-4
+- Rebuilt for new AOM, dav1d and jpegxl
+
+* Fri Mar 25 2022 Xavier Bachelot <xavier@bachelot.org> - 1.2.12-3
+- Add patch for dav1d 1.0.0 support
+
 * Thu Mar 10 2022 Xavier Bachelot <xavier@bachelot.org> - 1.2.12-2
 - Fix build on EL7 and EL8
 
