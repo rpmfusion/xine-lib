@@ -44,7 +44,7 @@
 Summary:        A multimedia engine
 Name:           xine-lib
 Version:        1.2.12
-Release:        9%{?snapshot:.%{date}hg%{revision}}%{?dist}
+Release:        10%{?snapshot:.%{date}hg%{revision}}%{?dist}
 License:        GPLv2+
 URL:            https://www.xine-project.org/
 %if ! 0%{?snapshot}
@@ -364,6 +364,9 @@ mkdir -p %{buildroot}%{codecdir}
 
 
 %changelog
+* Wed Aug 02 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 1.2.12-10
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
+
 * Sun Dec 04 2022 Sérgio Basto <sergio@serjux.com> - 1.2.12-9
 - Rebuild for libjxl on el9
 
